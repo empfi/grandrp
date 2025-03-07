@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrandRP - Notruf Hamburg</title>
+    <style>
+        :root {
+            --primary: #6b21a8;
+            --primary-glow: #9333ea;
+            --secondary: #4c1d95;
+            --text: #f8fafc;
+            --background: #0f172a;
+            --card-bg: #1e293b;
+            --card-hover: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth; /* Added for smooth scrolling */
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            background-color: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #f8fafc, #9333ea);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        /* New styles for nav links */
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--primary-glow);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 80%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-glow);
+            transform: translateY(-2px);
+        }
+
+        /* Active nav link styles */
+        .nav-links a.active {
+            color: var(--primary-glow);
+            background-color: rgba(147, 51, 234, 0.1);
+            box-shadow: 0 0 10px rgba(147, 51, 234, 0.2);
+        }
+
+        .nav-links a.active::before {
+            width: 80%;
+        }
+
+        /* Click animation for nav links */
+        .nav-links a:active {
+            transform: scale(0.95);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 40vw;
+            height: 40vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-glow) 0%, rgba(99, 102, 241, 0) 70%);
+            top: -20vw;
+            right: -20vw;
+            opacity: 0.3;
+            animation: float 15s infinite ease-in-out;
+            z-index: -1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 30vw;
+            height: 30vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary) 0%, rgba(99, 102, 241, 0) 70%);
+            bottom: -15vw;
+            left: -15vw;
+            opacity: 0.2;
+            animation: float 20s infinite ease-in-out reverse;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(5%, 5%); }
+            100% { transform: translate(0, 0); }
+        }
+
+        .hero-content {
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 0 0 10px rgba(147, 51, 234, 0.5);
+        }
+
+        h1 span {
+            color: var(--primary-glow);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--primary), var(--primary-glow));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.5);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .cta-button:hover::before {
+            transform: translateX(100%);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(147, 51, 234, 0.8);
+        }
+
+        /* Button click animation */
+        .cta-button:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 15px rgba(147, 51, 234, 0.6);
+        }
+
+        .features {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-glow);
+            text-shadow: 0 0 10px rgba(147, 51, 234, 0.3);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--primary-glow));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.3);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            color: var(--primary-glow);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .about {
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary) 0%, rgba(99, 102, 241, 0) 70%);
+            bottom: -250px;
+            right: -250px;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            position: relative;
+        }
+
+        .about-text::before {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-glow);
+            top: -25px;
+            left: -25px;
+            opacity: 0.1;
+            filter: blur(20px);
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-glow);
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            color: #cbd5e1;
+        }
+
+        .about-image {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .glow-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 50%, rgba(147, 51, 234, 0.1) 60%, transparent 70%);
+            animation: glow 6s infinite;
+        }
+
+        @keyframes glow {
+            0% { background-position: -100% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .join {
+            padding: 100px 0;
+            background-color: rgba(15, 23, 42, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .join::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom right, transparent, rgba(99, 102, 241, 0.05));
+            z-index: 0;
+        }
+
+        .join-content {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .join h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-glow);
+        }
+
+        .join p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .server-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-glow);
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            position: relative;
+        }
+
+        .stat-number::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--primary-glow), transparent);
+        }
+
+        .stat-text {
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+
+        footer {
+            background-color: #0f172a;
+            padding: 50px 0 20px;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-glow);
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary-glow);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.7rem;
+        }
+
+        .footer-column ul li a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary-glow);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(147, 51, 234, 0.3);
+        }
+
+        /* Navigation scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--primary-glow));
+            z-index: 9999;
+            width: 0%;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .server-stats {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Page change animation */
+        .page-transition {
+            animation: pageTransition 0.5s ease;
+        }
+
+        @keyframes pageTransition {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator"></div>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">GrandRP</div>
+                <div class="nav-links">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#about" class="nav-link">Über uns</a>
+                    <a href="#join" class="nav-link">Mitmachen</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Willkommen bei <span>GrandRP</span> Notruf Hamburg</h1>
+                <p>Erlebe das ultimative Notruf-Rollenspiel in einer detailgetreuen Nachbildung der Hansestadt Hamburg. Tauche ein in eine lebendige Community und werde Teil unserer virtuellen Welt.</p>
+                <a href="#join" class="cta-button pulse">Server beitreten</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title fade-in">Unsere Features</h2>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🚨</div>
+                    <h3>Realistisches Notrufsystem</h3>
+                    <p>Wir bieten ein Realistisches Notrufsystem, mit koorienieren Einsatzkräften!</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🏙️</div>
+                    <h3>Detailreiche Hamburg-Map</h3>
+                    <p>Erkunde eine liebevoll gestaltete Nachbildung von Hamburg mit bekannten Sehenswürdigkeiten und versteckten Details.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">👮</div>
+                    <h3>Vielfältige Rollen</h3>
+                    <p>Werde Polizist, Feuerwehrmann, Sanitäter oder Zivilist - jede Rolle bietet einzigartige Gameplay-Elemente und Herausforderungen.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Community</h3>
+                    <p>Werde Teil einer freundlichen und engagierten Community, die regelmäßig Events und Aktionen durchführt.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🎤</div>
+                    <h3>Voice-Chat-Integration</h3>
+                    <p>Realistische Kommunikation durch integrierte Sprach-Chat-Funktionen mit Funkkanälen durch Roblox Ingame-Voice.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🚩</div>
+                    <h3>Team</h3>
+                    <p>Nettes und kompetentes Staff-Team sowhohl Ingame als auch im Discord!</p>
+                </div>                
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <h2>Über GrandRP</h2>
+                    <p>GrandRP wurde 2025 mit dem Ziel gegründet, das beste Notruf-Rollenspiel-Erlebnis in Notruf Hamburg zu bieten.</p>
+                    <p>Wir legen großen Wert auf eine freundliche Community, realistische Abläufe und eine detailgetreue Umsetzung. Bei uns steht das Rollenspiel im Vordergrund - jede Interaktion trägt zur Entwicklung unserer gemeinsamen Geschichte bei.</p>
+                    <p>Egal ob du Neuling oder erfahrener Rollenspieler bist, bei GrandRP bist du herzlich willkommen! 🩷</p>
+                </div>
+                <div class="about-image fade-in">
+                    <img src="https://empfi.github.io/images/server-icon.jpg" alt="GrandRP Server">
+                    <div class="glow-effect"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="join" id="join">
+        <div class="container">
+            <div class="join-content">
+                <h2 class="fade-in">Werde Teil von GrandRP</h2>
+                <p class="fade-in">Unser Server ist für jeden offen, der Interesse an qualitativem Rollenspiel hat. Folge einfach den Schritten unten, um beizutreten und deine Reise in Hamburg zu beginnen.</p>
+                
+                <div class="server-stats">
+                    <div class="stat fade-in">
+                        <div class="stat-number">Discord</div>
+                        <div class="stat-text">Informativ und gut!</div>
+                    </div>
+                    <div class="stat fade-in">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-text">Server Online</div>
+                    </div>
+                    <div class="stat fade-in">
+                        <div class="stat-number">Gutes RP</div>
+                        <div class="stat-text">Roleplay, dass du niemals vergessen wirst!</div>
+                    </div>
+                </div>
+                
+                <a href="https://discord.gg/47NgQNXSDp" class="cta-button fade-in">Discord beitreten</a>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Navigation</h3>
+                    <ul>
+                        <li><a href="#home" class="footer-nav-link">Home</a></li>
+                        <li><a href="#features" class="footer-nav-link">Features</a></li>
+                        <li><a href="#about" class="footer-nav-link">Über uns</a></li>
+                        <li><a href="#join" class="footer-nav-link">Mitmachen</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Kontakt</h3>
+                    <ul>
+                        <li><a href="https://discord.gg/zu2CkepwPv">Discord</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Folge uns</h3>
+                    <div class="social-links">
+                        <a href="https://www.youtube.com/@empfomat" class="social-link">YT</a>
+                    </div>
+                </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animation for fade-in elements
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            function checkFade() {
+                fadeElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 150;
+                    
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        element.classList.add('active');
+                    }
+                });
+            }
+            
+            // Initial check
+            checkFade();
+            
+            // Check on scroll
+            window.addEventListener('scroll', checkFade);
+
+            // Scroll indicator
+            function updateScrollIndicator() {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.querySelector(".scroll-indicator").style.width = scrolled + "%";
+            }
+
+            window.addEventListener('scroll', updateScrollIndicator);
+
+            // Navigation active state
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            function setActiveNavLink() {
+                let currentSectionId = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.offsetHeight;
+                    if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                        currentSectionId = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + currentSectionId) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', setActiveNavLink);
+            
+            // Smooth scroll animation for all navigation links
+            document.querySelectorAll('.nav-link, .footer-nav-link, .cta-button[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Add click animation effect
+                    this.classList.add('clicked');
+                    setTimeout(() => {
+                        this.classList.remove('clicked');
+                    }, 300);
+                    
+                    // Get the target section
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        // Add page transition animation to target section
+                        targetSection.classList.add('page-transition');
+                        
+                        // Scroll to target with offset for header
+                        const headerOffset = 80;
+                        const elementPosition = targetSection.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Remove animation class after transition
+                        setTimeout(() => {
+                            targetSection.classList.remove('page-transition');
+                        }, 500);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
