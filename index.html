@@ -595,10 +595,117 @@
             0% { opacity: 0; transform: translateY(20px); }
             100% { opacity: 1; transform: translateY(0); }
         }
+
+        .reviews {
+    padding: 100px 0;
+    position: relative;
+    background-color: var(--background);
+    overflow: hidden;
+}
+
+.reviews p {
+    text-align: center;
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.review-card {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(99, 102, 241, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.review-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.3);
+    border-color: rgba(99, 102, 241, 0.3);
+}
+
+.review-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, var(--primary), var(--primary-glow));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+}
+
+.review-card:hover::before {
+    transform: scaleX(1);
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.review-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    border: 2px solid var(--primary-glow);
+}
+
+.review-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewer-name {
+    font-size: 1.2rem;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+}
+
+.review-rating {
+    color: #ffd700;
+    font-size: 1rem;
+}
+
+.review-text {
+    color: #94a3b8;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 768px) {
+    .reviews-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .review-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .review-avatar {
+        margin-bottom: 0.5rem;
+    }
+}        
     </style>
 </head>
 <body>
-    <!-- Scroll indicator -->
     <div class="scroll-indicator"></div>
 
     <header>
@@ -609,6 +716,7 @@
                     <a href="#home" class="nav-link active">Home</a>
                     <a href="#features" class="nav-link">Features</a>
                     <a href="#about" class="nav-link">Über uns</a>
+                    <a href="#reviews" class="nav-link">Bewertungen</a>                    
                     <a href="#join" class="nav-link">Mitmachen</a>
                 </div>
             </nav>
@@ -679,6 +787,45 @@
             </div>
         </div>
     </section>
+
+<div class="reviews" id="reviews">
+    <div class="container">
+        <h2 class="section-title fade-in">Bewertungen unserer Community</h2>
+        <p>Was denken unsere Spieler? Wir versuchen für jeden ein einzigartiges Spielerlebnis zu bieten, hier sind ein paar Meinungen unserer Community.</p>
+        <div class="reviews-grid">
+            <div class="review-card fade-in">
+                <div class="review-header">
+                    <div class="review-avatar">👤</div>
+                    <div class="review-info">
+                        <h3 class="reviewer-name">Alex</h3>
+                        <div class="review-rating">★★★★★</div>
+                    </div>
+                </div>
+                <p class="review-text">"GrandRP bietet das beste Rollenspiel-Erlebnis, das ich je hatte! Die Community ist super freundlich und das Team echt kompetent."</p>
+            </div>
+            <div class="review-card fade-in">
+                <div class="review-header">
+                    <div class="review-avatar">👤</div>
+                    <div class="review-info">
+                        <h3 class="reviewer-name">Sophie</h3>
+                        <div class="review-rating">★★★★☆</div>
+                    </div>
+                </div>
+                <p class="review-text">"Das gute Roleplay und die vielen Optionen machen echt Spaß. Manchmal könnten die Events noch etwas häufiger sein."</p>
+            </div>
+            <div class="review-card fade-in">
+                <div class="review-header">
+                    <div class="review-avatar">👤</div>
+                    <div class="review-info">
+                        <h3 class="reviewer-name">Max</h3>
+                        <div class="review-rating">★★★★★</div>
+                    </div>
+                </div>
+                <p class="review-text">"Einfach top! Der Voice-Chat und die verschiedenen Rollen machen jedes RP einzigartig. Absolut empfehlenswert!"</p>
+            </div>
+        </div>
+    </div>
+</div>
 
     <section class="join" id="join">
         <div class="container">
