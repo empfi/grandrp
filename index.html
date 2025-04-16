@@ -7,13 +7,14 @@
     <link rel="icon" type="image/png" href="server-logo-round.png">    
     <style>
         :root {
-            --primary: #6b21a8;
-            --primary-glow: #9333ea;
-            --secondary: #4c1d95;
-            --text: #f8fafc;
-            --background: #0f172a;
-            --card-bg: #1e293b;
-            --card-hover: #334155;
+            --primary: #FF85A1;  /* Noch fröhlicheres Rosa */
+            --primary-glow: #64FFDA;  /* Helleres Türkis */
+            --secondary: #FFE66D;  /* Helles Gelb */
+            --text: #E2E8F0;  /* Heller Text für Dark Mode */
+            --background: #0F172A;  /* Dunkler Hintergrund */
+            --card-bg: #1E293B;  /* Dunklerer Kartenhintergrund */
+            --card-hover: #2D3748;  /* Dunklerer Hover-Effekt */
+            --nav-bg: #1A1F2E;  /* Navbar Hintergrund */
         }
 
         * {
@@ -22,12 +23,14 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             scroll-behavior: smooth; /* Added for smooth scrolling */
+            border-radius: 15px;  /* Rundere Ecken überall */
         }
 
         body {
             background-color: var(--background);
             color: var(--text);
             overflow-x: hidden;
+            background-image: url('data:image/svg+xml,%3Csvg width="52" height="26" viewBox="0 0 52 26" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%2364FFDA" fill-opacity="0.05"%3E%3Cpath d="M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z" /%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
         }
 
         .container {
@@ -41,9 +44,11 @@
             position: fixed;
             width: 100%;
             z-index: 100;
-            background-color: rgba(15, 23, 42, 0.8);
+            background-color: var(--nav-bg);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 0 0 15px 15px !important;  /* Nur unten abgerundet */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         nav {
@@ -53,14 +58,16 @@
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            background: linear-gradient(to right, #f8fafc, #9333ea);
+            background: linear-gradient(45deg, var(--primary), var(--primary-glow));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-family: 'Comic Sans MS', cursive;
+            animation: bounce 3s infinite;
         }
 
         .nav-links {
@@ -74,9 +81,14 @@
             font-weight: 500;
             position: relative;
             overflow: hidden;
-            padding: 8px 12px;
-            border-radius: 4px;
+            padding: 12px 25px;
+            border-radius: 25px;
             transition: all 0.3s ease;
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-size: 1.2rem;
+            font-family: 'Comic Sans MS', cursive;
+            border: 2px solid transparent;
         }
 
         /* New styles for nav links */
@@ -98,7 +110,10 @@
 
         .nav-links a:hover {
             color: var(--primary-glow);
-            transform: translateY(-2px);
+            transform: translateY(-5px) rotate(3deg) scale(1.1);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-glow);
+            background-color: var(--card-hover);
         }
 
         /* Active nav link styles */
@@ -126,31 +141,26 @@
         }
 
         .hero::before {
-            content: '';
+            content: '🎮';
+            font-size: 6rem;
             position: absolute;
-            width: 40vw;
-            height: 40vw;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--primary-glow) 0%, rgba(99, 102, 241, 0) 70%);
-            top: -20vw;
-            right: -20vw;
-            opacity: 0.3;
-            animation: float 15s infinite ease-in-out;
-            z-index: -1;
+            top: 20%;
+            left: 10%;
+            opacity: 0.15;
+            animation: float 6s infinite ease-in-out;
+            filter: drop-shadow(0 0 15px var(--primary-glow));
         }
 
         .hero::after {
-            content: '';
+            content: '🎮';
+            font-size: 6rem;
             position: absolute;
-            width: 30vw;
-            height: 30vw;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--primary) 0%, rgba(99, 102, 241, 0) 70%);
-            bottom: -15vw;
-            left: -15vw;
-            opacity: 0.2;
-            animation: float 20s infinite ease-in-out reverse;
-            z-index: -1;
+            bottom: 20%;
+            right: 10%;
+            opacity: 0.15;
+            animation: float 6s infinite ease-in-out;
+            animation-delay: 2s;
+            filter: drop-shadow(0 0 15px var(--primary-glow));
         }
 
         @keyframes float {
@@ -167,7 +177,9 @@
             font-size: 3.5rem;
             margin-bottom: 1.5rem;
             line-height: 1.2;
-            text-shadow: 0 0 10px rgba(147, 51, 234, 0.5);
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+            font-family: 'Comic Sans MS', cursive;
+            color: var(--primary);
         }
 
         h1 span {
@@ -185,20 +197,23 @@
             display: inline-block;
             background: linear-gradient(45deg, var(--primary), var(--primary-glow));
             color: white;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
+            padding: 15px 35px;
+            border-radius: 30px;
             font-weight: 600;
             text-decoration: none;
-            box-shadow: 0 0 20px rgba(147, 51, 234, 0.5);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            font-size: 1.3rem;
+            font-family: 'Comic Sans MS', cursive;
+            transform-style: preserve-3d;
         }
 
         .cta-button::before {
-            content: '';
+            content: '🎮';
             position: absolute;
             top: 0;
             left: 0;
@@ -214,8 +229,9 @@
         }
 
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 30px rgba(147, 51, 234, 0.8);
+            transform: translateY(-8px) rotate(3deg);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+            padding-right: 50px;
         }
 
         /* Button click animation */
@@ -244,12 +260,14 @@
 
         .feature-card {
             background-color: var(--card-bg);
-            border-radius: 16px;
+            border-radius: 25px;
             padding: 2rem;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(99, 102, 241, 0.1);
+            border: 3px solid var(--primary-glow);
+            transform-style: preserve-3d;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .feature-card::before {
@@ -266,8 +284,8 @@
         }
 
         .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.3);
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
             border-color: rgba(99, 102, 241, 0.3);
         }
 
@@ -276,15 +294,25 @@
         }
 
         .feature-icon {
-            font-size: 2.5rem;
+            font-size: 4rem;
             margin-bottom: 1.5rem;
             display: inline-block;
             color: var(--primary-glow);
+            animation: bounce 2s infinite;
+            filter: drop-shadow(0 0 10px var(--primary-glow));
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .feature-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
+            font-family: 'Comic Sans MS', cursive;
+            color: var(--primary);
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
         }
 
         .feature-card p {
@@ -316,6 +344,10 @@
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: center;
+            background-color: var(--card-bg);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .about-text {
@@ -339,6 +371,8 @@
             font-size: 2.5rem;
             margin-bottom: 1.5rem;
             color: var(--primary-glow);
+            font-family: 'Comic Sans MS', cursive;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
         }
 
         .about-text p {
@@ -399,12 +433,18 @@
             text-align: center;
             position: relative;
             z-index: 1;
+            background-color: var(--card-bg);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .join h2 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
             color: var(--primary-glow);
+            font-family: 'Comic Sans MS', cursive;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
         }
 
         .join p {
@@ -451,9 +491,9 @@
         }
 
         footer {
-            background-color: #0f172a;
+            background-color: var(--nav-bg);
             padding: 50px 0 20px;
-            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            border-top: 2px solid var(--primary-glow);
         }
 
         .footer-content {
@@ -514,23 +554,23 @@
         }
 
         .social-link {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--card-bg);
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            background: linear-gradient(45deg, var(--primary), var(--primary-glow));
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text);
+            color: white;
             transition: all 0.3s ease;
             text-decoration: none;
-            border: 1px solid rgba(99, 102, 241, 0.2);
+            font-size: 1.2rem;
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
 
         .social-link:hover {
-            background-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(147, 51, 234, 0.3);
+            transform: scale(1.2) rotate(15deg) translateZ(20px);
         }
 
         /* Navigation scroll indicator */
@@ -616,12 +656,13 @@
 
 .review-card {
     background-color: var(--card-bg);
-    border-radius: 16px;
+    border-radius: 25px;
     padding: 2rem;
     transition: all 0.3s ease;
-    border: 1px solid rgba(99, 102, 241, 0.1);
+    border: 3px dashed var(--primary);
     position: relative;
     overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
 .review-card:hover {
@@ -657,13 +698,19 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: var(--primary);
+    background: linear-gradient(45deg, var(--primary), var(--primary-glow));
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 2rem;
     margin-right: 1rem;
     border: 2px solid var(--primary-glow);
+    animation: bounce 2s infinite alternate-reverse;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .review-info {
